@@ -20,9 +20,10 @@ $.fn.extend
                 leaftr.display()
 
 class Leaftr
+    max_view: 0
+    min_view: 0
+
     constructor: (@data, @div, @options) ->
-        @max_view = 0
-        @min_view = 0
 
     display: ->
         self = this
