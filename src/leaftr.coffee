@@ -16,15 +16,31 @@ $.fn.extend
             error: (jqXHR, textStatus, errorThrown) ->
                 console.log "AJAX Error: #{textStatus}"
             success: (data, textStatus, jqXHR) ->
-                leaftr = new Leaftr settings
-                for value in data.value
-                    do (value) ->
-                        img = value.related[0].image_url
-                        leaftr.display plugin_div, img, value.name
+                leaftr = new Leaftr(data, plugin_div, settings)
+                leaftr.display()
 
 class Leaftr
+    constructor: (@data, @div, @options) ->
+        @max_view = 0
+        @min_view = 0
 
-    constructor: (@options={}) ->
+    display: ->
+        self = this
+        self.getViewMinMax()
+        for value in @data.value
+            do (value) ->
+                img = value.related[0].image_url
+                self.display_div img, value.name
 
-    display: (div, img, name) ->
-        div.append "<div>" + "<img src='" + img + "'>" + name + "</div>"
+    getViewMinMax: ->
+        self = this
+        for value in @data.value
+            do (value) ->
+                for related in value.related
+                    do (related) ->
+                        @max_view = related.view_count if related.view_count > @max_view
+                        @min_view = related.view_count if @min_view == 0
+                        @min_view = related.view_count if related.view_count < @min_view
+
+    display_div: (img, name) ->
+        @div.append "<div>" + "<img src='" + img + "'>" + name + "</div>"
