@@ -1,3 +1,4 @@
-#leaftr img {
-	height: 100px;
+.leaftr-related {
+	float: left;
+	margin: 8px;
 }

@@ -5,8 +5,11 @@ $.fn.extend
         plugin_div = this
 
         settings =
-            min_width: '75px'
-            max_width: '120px'
+            width: '600px'
+            max_element: 10
+            related_width: '100px'
+            img_width: '100px'
+            max_description_length: 50
 
         settings = $.extend settings, options
 
@@ -20,19 +23,29 @@ $.fn.extend
                 leaftr.display()
 
 class Leaftr
-
-    max_view = 0
-    min_view = 0
+    max_view: 0
+    min_view: 0
 
     constructor: (@data, @div, @options) ->
+        @div.css({
+            'width' : @options.width
+            'height' : @options.height
+        })
 
     display: ->
         self = this
         self.getViewMinMax()
-        # for value in @data.value
-        #     do (value) ->
-        #         img = value.related[0].image_url
-        #         self.display_div img, value.name
+        nb_element = 0
+        for value in @data.value
+            do (value) ->
+                for related in value.related
+                    do (related) ->
+                        if nb_element++ < self.options.max_element
+                            self.display_div related.image_url, related.description
+
+        $('.leaftr-related').each ->
+            $(this).css({'width' : self.options.related_width})
+            $(this).children().css({'width' : self.options.img_width})
 
     getViewMinMax: ->
         self = this
@@ -43,8 +56,10 @@ class Leaftr
                         @max_view = related.view_count if related.view_count > @max_view
                         @min_view = related.view_count if @min_view == 0
                         @min_view = related.view_count if related.view_count < @min_view
-        console.log @max_view
-        console.log @min_view
 
     display_div: (img, name) ->
-        @div.append "<div>" + "<img src='" + img + "'>" + name + "</div>"
+        name = '' if name == undefined
+
+        if name.length > @options.max_description_length
+            name = name.substr(0, @options.max_description_length) + '...'
+        @div.append "<div class='leaftr-related'><img src='" + img + "'>" + name + "</div>"
