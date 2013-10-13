@@ -41,9 +41,9 @@ class Leaftr
                 for related in value.related
                     do (related) ->
                         if nb_element++ < self.options.max_element
-                            self.display_div related.image_url, related.description
+                            self.display_div related
 
-        $('.leaftr-related').each ->
+        $('.leaftr-tile').each ->
             $(this).css({'width' : self.options.related_width})
             $(this).children().css({'width' : self.options.img_width})
 
@@ -57,9 +57,14 @@ class Leaftr
                         @min_view = related.view_count if @min_view == 0
                         @min_view = related.view_count if related.view_count < @min_view
 
-    display_div: (img, name) ->
+    display_div: (tile) ->
+        img = tile.image_url
+        url = tile.url
+        console.log tile
+        name = tile.description
         name = '' if name == undefined
 
         if name.length > @options.max_description_length
             name = name.substr(0, @options.max_description_length) + '...'
-        @div.append "<div class='leaftr-related'><img src='" + img + "'>" + name + "</div>"
+        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'>" + name + "</div></a>")
+
