@@ -2,9 +2,15 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Etalab, plugin test</title>
+
 		<script TYPE="text/javascript" src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="panel-style.css">
 		<script type="text/javascript" src="src/panel.js"></script>
-		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+		<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
 	</head>
 	<body>
 		<div id="leaftr-panel">
@@ -37,10 +43,14 @@
 			</form>
 			<div id="leaftr-generated-code">
 				<pre>
+					<code class="html">
 &lt;script type="text/javascript" src="http://pfee.leaftr.com/src/leaftr.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript"&gt;
-	$('#leaftr').leaftr();
+	$(document).ready(function() {
+		$('#leaftr').leaftr();
+	});
 &lt;/script&gt;
+					</code>
 				</pre>
 			</div>
 		</div>
