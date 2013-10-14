@@ -12,7 +12,7 @@ a {
 /* Tile */
 .leaftr-tile
 {
-	float: left;
+ 	float: left;
 	margin: 8px;
 
     border: 7px solid #fff;
@@ -25,16 +25,20 @@ a {
 
     display: block;
 
-    /* to uncomment when adding css for tile-hover
-
     cursor: pointer;
     cursor: -webkit-zoom-in;
     cursor: -moz-zoom-in;
     cursor: zoom-in;
-    */
 }
 
 .leaftr-tile:hover
 {
-	width: 300px;
+	opacity: 0.5;
 }
+
+
+/*.tile-hover
+{
+	z-index: 	5001;
+	height: 	30%;
+}*/
