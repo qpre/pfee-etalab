@@ -15,16 +15,16 @@ $(document).ready ->
 	$("input").keyup () ->
 		options = ''
 		if $.isNumeric($("#width").val())
-			options += '\t\t\twidth:' + $("#width").val() + ',\n'
+			options += '\t\t\twidth:' + $("#width").val() + 'px,\n'
 
 		if $.isNumeric($("#max_element").val())
 			options += '\t\t\tmax_element:' + $("#max_element").val() + ',\n'
 
 		if $.isNumeric($("#related_width").val())
-			options += '\t\t\trelated_width:' + $("#related_width").val() + ',\n'
+			options += '\t\t\trelated_width:' + $("#related_width").val() + 'px,\n'
 
 		if $.isNumeric($("#img_width").val())
-			options += '\t\t\timg_width:' + $("#img_width").val() + ',\n'
+			options += '\t\t\timg_width:' + $("#img_width").val() + 'px,\n'
 
 		if $.isNumeric($("#max_title_length").val())
 			options += '\t\t\tmax_title_length:' + $("#max_title_length").val() + ',\n'
