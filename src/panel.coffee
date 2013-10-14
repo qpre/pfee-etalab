@@ -2,6 +2,7 @@ $ = jQuery
 
 $(document).ready ->
 	code = '
+&lt;link rel="stylesheet" type="text/css" href="http://pfee.leaftr.com/leaftr.css"&gt;\n
 &lt;script type="text/javascript" src="http://pfee.leaftr.com/src/leaftr.js"&gt;&lt;/script&gt;\n
 &lt;script type="text/javascript"&gt;\n
 	$(document).ready(function() { \n
