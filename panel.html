@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Etalab, plugin test</title>
+		<script TYPE="text/javascript" src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="src/panel.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<div id="leaftr-panel">
+			<h1>Code widget</h1>
+			<form>
+				<div>
+					<label for="width">Largeur du widget</label>
+					<input id="width" name="width" placeholder="600">
+				</div>
+
+				<div>
+					<label for="max_element">Nombre de tuile à afficher</label>
+					<input id="max_element" name="max_element" placeholder="25">
+				</div>
+
+				<div>
+					<label for="related_width">Largeur de la tuile</label>
+					<input id="related_width" name="related_width" placeholder="100">
+				</div>
+
+				<div>
+					<label for="img_width">Largeur des images</label>
+					<input id="img_width" name="img_width" placeholder="100">
+				</div>
+
+				<div>
+					<label for="max_title_length">Taille maximum du titre à afficher</label>
+					<input id="max_title_length" name="max_title_length" placeholder="50">
+				</div>
+
+				<button id="leaftr-generate">Générer le code</button>
+			</form>
+			<div class="leaftr-generated-code">
+				<pre>
+					&lt;script type="text/javascript" src="http://pfee.leaftr.com/src/leaftr.js"&gt;&lt;/script&gt;
+					&lt;script type="text/javascript"&gt;
+						$('#leaftr').leaftr();
+					&lt;/script&gt;
+				</pre>
+			</div>
+		</div>
+	</body>
+</html>
