@@ -10,7 +10,7 @@ $(document).ready ->
 &lt;/script&gt;\n
 '
 
-	$("#leaftr-generate").on 'click', () ->
+	$("input").keyup () ->
 		options = ''
 		if $.isNumeric($("#width").val())
 			options += '\t\twidth:' + $("#width").val() + ',\n'

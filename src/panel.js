@@ -14,7 +14,7 @@
 	});\n\
 &lt;/script&gt;\n\
 ';
-    $("#leaftr-generate").on('click', function() {
+    $("input").keyup(function() {
       var options;
       options = '';
       if ($.isNumeric($("#width").val())) {
