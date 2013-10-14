@@ -9,33 +9,38 @@
     code = '\
 &lt;script type="text/javascript" src="http://pfee.leaftr.com/src/leaftr.js"&gt;&lt;/script&gt;\n\
 &lt;script type="text/javascript"&gt;\n\
-	$("#leaftr").leaftr({\n\
+	$(document).ready(function() { \n\
+		$("#leaftr").leaftr({\n\
 ##REPLACE## \n\
-	});\n\
+		});\n\
+	}); \n\
 &lt;/script&gt;\n\
 ';
     $("input").keyup(function() {
       var options;
       options = '';
       if ($.isNumeric($("#width").val())) {
-        options += '\t\twidth:' + $("#width").val() + ',\n';
+        options += '\t\t\twidth:' + $("#width").val() + ',\n';
       }
       if ($.isNumeric($("#max_element").val())) {
-        options += '\t\tmax_element:' + $("#max_element").val() + ',\n';
+        options += '\t\t\tmax_element:' + $("#max_element").val() + ',\n';
       }
       if ($.isNumeric($("#related_width").val())) {
-        options += '\t\trelated_width:' + $("#related_width").val() + ',\n';
+        options += '\t\t\trelated_width:' + $("#related_width").val() + ',\n';
       }
       if ($.isNumeric($("#img_width").val())) {
-        options += '\t\timg_width:' + $("#img_width").val() + ',\n';
+        options += '\t\t\timg_width:' + $("#img_width").val() + ',\n';
       }
       if ($.isNumeric($("#max_title_length").val())) {
-        options += '\t\tmax_title_length:' + $("#max_title_length").val() + ',\n';
+        options += '\t\t\tmax_title_length:' + $("#max_title_length").val() + ',\n';
       }
       if (options.charAt(options.length - 2) === ',') {
         options = options.substr(0, options.length - 2);
       }
-      $("#leaftr-generated-code>pre").html(code.replace("##REPLACE##", options));
+      $("#leaftr-generated-code>pre>code").html(code.replace("##REPLACE##", options));
+      $('#leaftr-generated-code>pre>code').each(function(i, e) {
+        return hljs.highlightBlock(e);
+      });
       return false;
     });
     return false;
