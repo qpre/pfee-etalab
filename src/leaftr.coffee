@@ -60,11 +60,10 @@ class Leaftr
     display_div: (tile) ->
         img = tile.image_url
         url = tile.url
-        console.log tile
-        name = tile.description
+        name = tile.title
         name = '' if name == undefined
 
         if name.length > @options.max_description_length
             name = name.substr(0, @options.max_description_length) + '...'
-        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'>" + name + "</div></a>")
+        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'><div class='tile-hover'>" + name + "</div></div></a>")
 
