@@ -9,7 +9,7 @@ $.fn.extend
             max_element: 10
             related_width: '100px'
             img_width: '100px'
-            max_description_length: 50
+            max_title_length: 50
 
         settings = $.extend settings, options
 
@@ -63,7 +63,7 @@ class Leaftr
         name = tile.title
         name = '' if name == undefined
 
-        if name.length > @options.max_description_length
-            name = name.substr(0, @options.max_description_length) + '...'
+        if name.length > @options.max_title_length
+            name = name.substr(0, @options.max_title_length) + '...'
         @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'><div class='tile-hover'>" + name + "</div></div></a>")
 
