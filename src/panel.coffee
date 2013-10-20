@@ -29,6 +29,12 @@ $(document).ready ->
 
 		if $.isNumeric($("#max_title_length").val())
 			options += '\t\t\tmax_title_length: ' + $("#max_title_length").val() + ',\n'
+            
+		if $.isNumeric($("#city_code").val())
+			options += '\t\t\tcity_code: [\'' + $("#city_code").val() + '\'],\n'
+            
+		if $.isNumeric($("#department_code").val())
+			options += '\t\t\tdepartment_code: [\'' + $("#department_code").val() + '\'],\n'
 
 		if options.charAt(options.length - 2) == ','
 			options = options.substr(0, options.length - 2);

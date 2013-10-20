@@ -10,10 +10,20 @@ $.fn.extend
             related_width: '100px'
             img_width: '100px'
             max_title_length: 50
+            city_code: []
+            department_code: []
 
         settings = $.extend settings, options
-
-        $.ajax 'http://cow.etalab2.fr/api/1/datasets/related',
+        
+        url = 'http://cow.etalab2.fr/api/1/datasets/related'
+        
+        settings.city_code.forEach((city) ->
+            unless city == 0 then url += '?territory=CommuneOfFrance/' + city)
+            
+        settings.department_code.forEach((department) ->
+            unless department == 0 then url += '?territory=DepartmentOfFrance/' + department)
+            
+        $.ajax url,
             type: 'GET'
             dataType: 'json'
             error: (jqXHR, textStatus, errorThrown) ->
