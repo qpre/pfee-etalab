@@ -69,6 +69,7 @@ class Leaftr
 
     display_div: (tile) ->
         img = tile.image_url
+        img = 'assets/img/notFound.png' if img == undefined
         url = tile.url
         name = tile.title
         name = '' if name == undefined

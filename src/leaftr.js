@@ -128,6 +128,9 @@
     Leaftr.prototype.display_div = function(tile) {
       var img, name, url;
       img = tile.image_url;
+      if (img === void 0) {
+        img = 'assets/img/notFound.png';
+      }
       url = tile.url;
       name = tile.title;
       if (name === void 0) {
