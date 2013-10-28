@@ -12,28 +12,31 @@ a {
 /* Tile */
 .leaftr-tile
 {
- 	float: left;
 	margin: 8px;
 
   border: 7px solid #fff;
   border-color: #fff;
   background-color: #fff;
-  overflow: hidden;
+  
   font-size: 11px;
+  
+  display:block;
 
   box-shadow: 0 1px 3px rgba(34,25,25,0.4);
-
-  display: block;
-
   cursor: pointer;
   cursor: -webkit-zoom-in;
   cursor: -moz-zoom-in;
   cursor: zoom-in;
 }
 
+.leaftr-tile:hover
+{
+    opacity: 0.5;
+}
+
 #leaftr {
    /* Prevent vertical gaps */
-   line-height: 0;
+   /*line-height: 0;*/
    
    -webkit-column-count: auto;
    -webkit-column-gap:   0px;
@@ -41,19 +44,6 @@ a {
    -moz-column-gap:      0px;
    column-count:         auto;
    column-gap:           0px;
- 
-}
-
-#leaftr div {
-  /* Just in case there are inline attributes
-  width: 100px !important;*/
-  height: auto !important;
-}
-
-
-.leaftr-tile:hover
-{
-	opacity: 0.5;
 }
 
 /*@media (max-width: 1200px) {
