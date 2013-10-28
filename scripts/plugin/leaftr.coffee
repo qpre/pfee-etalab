@@ -77,13 +77,7 @@ class Leaftr
         name = tile.title
         name = '' if name == undefined
 
-        ###        
-        tile_coef = if tile.view_count > 0 then tile.view_count else 1
-        console.log tile_coef
-        tile_width =  @options.related_width * tile_coef
-        ###
-
         if name.length > @options.max_title_length
             name = name.substr(0, @options.max_title_length) + '...'
-        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'>" + name + "</div></a>")
+        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'><div class='leaftr-tile-hover'>" + name + "</div></div></a>")
 
