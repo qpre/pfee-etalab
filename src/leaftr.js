@@ -147,7 +147,7 @@
       if (name.length > this.options.max_title_length) {
         name = name.substr(0, this.options.max_title_length) + '...';
       }
-      return this.div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'><div>" + name + "</div></div></a>");
+      return this.div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'>" + name + "</div></a>");
     };
 
     return Leaftr;

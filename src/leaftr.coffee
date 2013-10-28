@@ -85,5 +85,5 @@ class Leaftr
 
         if name.length > @options.max_title_length
             name = name.substr(0, @options.max_title_length) + '...'
-        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'><div>" + name + "</div></div></a>")
+        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'>" + name + "</div></a>")
 
