@@ -6,9 +6,9 @@ $(document).ready ->
 &lt;script type="text/javascript" src="http://pfee.leaftr.com/src/leaftr.js"&gt;&lt;/script&gt;\n
 &lt;script type="text/javascript"&gt;\n
 	$(document).ready(function() { \n
-		$("#leaftr").leaftr({\n
+		var leaftrOptions = {\n
 ##REPLACE## \n
-		});\n
+		};\n
 	}); \n
 &lt;/script&gt;\n
 '
