@@ -1,10 +1,9 @@
 require(
 	[
 		"../lib/masonry",
-		"tile", 
 		"leaftr"
 	]
 	, 
-		(loadIt) ->
+		(Masonry, Tile, Leaftr) ->
 			$('#leaftr').leaftr(leaftrOptions) 
 )

@@ -3,12 +3,15 @@ $ = jQuery
 $(document).ready ->
 	code = '
 &lt;link rel="stylesheet" type="text/css" href="http://pfee.leaftr.com/leaftr.css"&gt;\n
-&lt;script type="text/javascript" src="http://pfee.leaftr.com/src/leaftr.js"&gt;&lt;/script&gt;\n
+&lt;script type="text/javascript" src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"&gt;&lt;/script&gt;\n
+&lt;script type="text/javascript" src="http://pfee.leaftr.com/scripts/lib/imagesloaded.pkgd.min.js"&gt;&lt;/script&gt;\n
+&lt;script type="text/javascript" src="http://pfee.leaftr.com/scripts/lib/masonry.js"&gt;&lt;/script&gt;\n
+&lt;script type="text/javascript" src="http://pfee.leaftr.com/scripts/plugin/leaftr.js"&gt;&lt;/script&gt;\n
 &lt;script type="text/javascript"&gt;\n
 	$(document).ready(function() { \n
-		var leaftrOptions = {\n
+		$(\'#leaftr\').leaftr({\n
 ##REPLACE## \n
-		};\n
+		});\n
 	}); \n
 &lt;/script&gt;\n
 '
