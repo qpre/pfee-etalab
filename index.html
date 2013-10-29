@@ -2,7 +2,9 @@
 	<head>
 		<title>Etalab, plugin test</title>
 		<script TYPE="text/javascript" src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="scripts/lib/require.js" data-main='scripts/plugin/main.js'></script>
+		<script TYPE="text/javascript" src="scripts/lib/imagesloaded.pkgd.min.js"></script>
+		<script TYPE="text/javascript" src="scripts/lib/masonry.js"></script>
+		<script type="text/javascript" src="scripts/plugin/leaftr.js" ></script>
 		<link rel="stylesheet" type="text/css" href="leaftr.css">
 	</head>
 	<body>
@@ -10,9 +12,9 @@
 
 		</div>
 		<script type="text/javascript">
-			var leaftrOptions = {
+			$('#leaftr').leaftr({
 				max_element: 10
-			};
+			});
 		</script>
 	</body>
 </html>
