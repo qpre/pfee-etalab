@@ -61,6 +61,7 @@ class Leaftr
     tiles: null
     max_view: 0
     min_view: 0
+    isLoading: false
 
     constructor: (@data, @div, @options) ->
         @loadTiles()
@@ -104,9 +105,9 @@ class Leaftr
                         self.min_view = related.view_count if related.view_count < self.min_view
 
     displayFromOffset: (offset) ->
-        @offset = offset
         @getViewMinMax()
         @setClasses()
+        @offset = offset
 
 		    # Add max_elements to the div
         for i in [offset..(offset + @options.max_element)] by 1
@@ -118,6 +119,7 @@ class Leaftr
 		    # Let's apply some masonry when the heights are ready
         @div.imagesLoaded(() ->
                 console.log 'images loaded'
+                self.isLoading = false
                 self.div.masonry('layout')
             )
 
@@ -125,6 +127,7 @@ class Leaftr
         @div.scroll(() ->
             scrollPos = (self.div[0].scrollHeight - self.div.scrollTop())
             if (scrollPos - self.div.height() == 0)
-                if (self.offset + 10 < self.tiles.length)
+                if ((self.offset + 10 < self.tiles.length) && (self.isLoading != true))
                     self.displayFromOffset(self.offset + 10)
+                    self.isLoading = true
             )

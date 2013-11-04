@@ -89,6 +89,8 @@
 
     Leaftr.prototype.min_view = 0;
 
+    Leaftr.prototype.isLoading = false;
+
     function Leaftr(data, div, options) {
       this.data = data;
       this.div = div;
@@ -183,9 +185,9 @@
 
     Leaftr.prototype.displayFromOffset = function(offset) {
       var i, self, _i, _ref;
-      this.offset = offset;
       this.getViewMinMax();
       this.setClasses();
+      this.offset = offset;
       for (i = _i = offset, _ref = offset + this.options.max_element; _i <= _ref; i = _i += 1) {
         this.tiles[i].display(this.div, i);
         this.div.masonry('appended', $('#item' + i));
@@ -193,14 +195,16 @@
       self = this;
       this.div.imagesLoaded(function() {
         console.log('images loaded');
+        self.isLoading = false;
         return self.div.masonry('layout');
       });
       return this.div.scroll(function() {
         var scrollPos;
         scrollPos = self.div[0].scrollHeight - self.div.scrollTop();
         if (scrollPos - self.div.height() === 0) {
-          if (self.offset + 10 < self.tiles.length) {
-            return self.displayFromOffset(self.offset + 10);
+          if ((self.offset + 10 < self.tiles.length) && (self.isLoading !== true)) {
+            self.displayFromOffset(self.offset + 10);
+            return self.isLoading = true;
           }
         }
       });
