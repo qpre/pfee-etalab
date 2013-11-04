@@ -74,6 +74,7 @@
       this.options = options;
       this.div.css({
         'width': this.options.width,
+        'min-height': this.options.height,
         'max-height': this.options.height
       });
       this.div.masonry({
@@ -195,7 +196,7 @@
     };
 
     Leaftr.prototype.displayLoadingWheel = function() {
-      return this.div.append("<div id='leaftr-wheel'><img src='assets/img/loading.gif'></div>");
+      return this.div.append("<img id='leaftr-wheel' src='assets/img/loading.gif'>");
     };
 
     Leaftr.prototype.hideLoadingWheel = function() {

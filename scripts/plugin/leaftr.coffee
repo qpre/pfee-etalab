@@ -50,6 +50,7 @@ class Leaftr
     constructor: (@div, @options) ->
         @div.css({
             'width' : @options.width
+            'min-height' : @options.height
             'max-height' : @options.height
         })
         @div.masonry({
@@ -111,7 +112,7 @@ class Leaftr
                         self.min_view = related.view_count if related.view_count < self.min_view
 
     displayLoadingWheel: () ->
-      @div.append("<div id='leaftr-wheel'><img src='assets/img/loading.gif'></div>")
+      @div.append("<img id='leaftr-wheel' src='assets/img/loading.gif'>")
       
     hideLoadingWheel: () ->
       $('#leaftr-wheel').remove()
