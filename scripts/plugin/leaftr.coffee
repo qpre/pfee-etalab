@@ -6,6 +6,7 @@ $.fn.extend
 
         settings =
             width: '600px'
+            height: '600px'
             max_element: 10
             related_width: '100px'
             img_width: '100px'
@@ -30,10 +31,11 @@ $.fn.extend
                 console.log "AJAX Error: #{textStatus}"
             success: (data, textStatus, jqXHR) ->
                 leaftr = new Leaftr(data, plugin_div, settings)
-                leaftr.display()
+                leaftr.displayFromOffset(0)
 
 ###
     TILE CLASS
+	Delegate for the items' actions
 ###
 
 class Tile
@@ -47,11 +49,12 @@ class Tile
         @name = data.title
         @name = '' if @name == undefined
 
-    display: (parent) ->
-        parent.append("<a target='_blank' href='" + @url + "'><div class='" + @clss+ "'><img src='" + @img + "'><div class='leaftr-tile-hover'>" + @name + "</div></div></a>")
+    display: (parent, @offset) ->
+        parent.append("<a target='_blank' href='" + @url + "' id='item" + @offset + "'><div class='" + @clss + "'><img src='" + @img + "'><div class='leaftr-tile-hover'>" + @name + "</div></div></a>")
 
 ###
     LEAFTR MAIN CLASS
+	Handling the containers' lifecycle
 ###
 
 class Leaftr
@@ -63,7 +66,12 @@ class Leaftr
         @loadTiles()
         @div.css({
             'width' : @options.width
-            #'height' : @options.height
+            'max-height' : @options.height
+        })
+        @div.masonry({
+          #columnWidth: @options.related_width
+          itemSelector: '.item'
+          gutter: 5
         })
 
     loadTiles: () ->
@@ -85,8 +93,6 @@ class Leaftr
                 if tile.view_count >= (@max_view / 2)
                     tile.clss = 'item w2'
 
-            console.log "class: " + tile.clss + " for view_count: " + tile.view_count
-
     getViewMinMax: ->
         self = this
         for value in @data.value
@@ -97,40 +103,28 @@ class Leaftr
                         self.min_view = related.view_count if self.min_view == 0
                         self.min_view = related.view_count if related.view_count < self.min_view
 
-    display: () ->
+    displayFromOffset: (offset) ->
+        @offset = offset
         @getViewMinMax()
         @setClasses()
-        console.log @max_view
-        console.log @min_view
 
-        for i in [0..@options.max_element] by 1
-            @tiles[i].display(@div)
-
-        @div.masonry({
-                columnWidth: 50
-                itemSelector: '.item'
-            })
+		    # Add max_elements to the div
+        for i in [offset..(offset + @options.max_element)] by 1
+            @tiles[i].display(@div, i)
+            @div.masonry('appended', $('#item'+i))
 
         self = this
+
+		    # Let's apply some masonry when the heights are ready
         @div.imagesLoaded(() ->
                 console.log 'images loaded'
-                self.div.masonry({
-                    columnWidth: @options.related_width
-                    itemSelector: '.item'
-                    gutter: 5
-                })
+                self.div.masonry('layout')
             )
-        
 
-    ###
-    display_div: (tile) ->
-        img = tile.image_url
-        img = 'assets/img/notFound.png' if img == undefined
-        url = tile.url
-        name = tile.title
-        name = '' if name == undefined
-
-        if name.length > @options.max_title_length
-            name = name.substr(0, @options.max_title_length) + '...'
-        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'><div class='leaftr-tile-hover'>" + name + "</div></div></a>")
-    ###
+		    # let's listen to that scroll thing
+        @div.scroll(() ->
+            scrollPos = (self.div[0].scrollHeight - self.div.scrollTop())
+            if (scrollPos - self.div.height() == 0)
+                if (self.offset + 10 < self.tiles.length)
+                    self.displayFromOffset(self.offset + 10)
+            )

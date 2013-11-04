@@ -10,6 +10,7 @@
       plugin_div = this;
       settings = {
         width: '600px',
+        height: '600px',
         max_element: 10,
         related_width: '100px',
         img_width: '100px',
@@ -38,7 +39,7 @@
         success: function(data, textStatus, jqXHR) {
           var leaftr;
           leaftr = new Leaftr(data, plugin_div, settings);
-          return leaftr.display();
+          return leaftr.displayFromOffset(0);
         }
       });
     }
@@ -46,6 +47,7 @@
 
   /*
       TILE CLASS
+  	Delegate for the items' actions
   */
 
 
@@ -65,8 +67,9 @@
       }
     }
 
-    Tile.prototype.display = function(parent) {
-      return parent.append("<a target='_blank' href='" + this.url + "'><div class='" + this.clss + "'><img src='" + this.img + "'><div class='leaftr-tile-hover'>" + this.name + "</div></div></a>");
+    Tile.prototype.display = function(parent, offset) {
+      this.offset = offset;
+      return parent.append("<a target='_blank' href='" + this.url + "' id='item" + this.offset + "'><div class='" + this.clss + "'><img src='" + this.img + "'><div class='leaftr-tile-hover'>" + this.name + "</div></div></a>");
     };
 
     return Tile;
@@ -75,6 +78,7 @@
 
   /*
       LEAFTR MAIN CLASS
+  	Handling the containers' lifecycle
   */
 
 
@@ -91,7 +95,12 @@
       this.options = options;
       this.loadTiles();
       this.div.css({
-        'width': this.options.width
+        'width': this.options.width,
+        'max-height': this.options.height
+      });
+      this.div.masonry({
+        itemSelector: '.item',
+        gutter: 5
       });
     }
 
@@ -126,16 +135,17 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         tile = _ref[_i];
         if (this.max_view === 0) {
-          tile.clss = 'item';
+          _results.push(tile.clss = 'item');
         } else {
           if (tile.view_count < (this.max_view / 2)) {
             tile.clss = 'item';
           }
           if (tile.view_count >= (this.max_view / 2)) {
-            tile.clss = 'item w2';
+            _results.push(tile.clss = 'item w2');
+          } else {
+            _results.push(void 0);
           }
         }
-        _results.push(console.log("class: " + tile.clss + " for view_count: " + tile.view_count));
       }
       return _results;
     };
@@ -171,43 +181,30 @@
       return _results;
     };
 
-    Leaftr.prototype.display = function() {
+    Leaftr.prototype.displayFromOffset = function(offset) {
       var i, self, _i, _ref;
+      this.offset = offset;
       this.getViewMinMax();
       this.setClasses();
-      console.log(this.max_view);
-      console.log(this.min_view);
-      for (i = _i = 0, _ref = this.options.max_element; _i <= _ref; i = _i += 1) {
-        this.tiles[i].display(this.div);
+      for (i = _i = offset, _ref = offset + this.options.max_element; _i <= _ref; i = _i += 1) {
+        this.tiles[i].display(this.div, i);
+        this.div.masonry('appended', $('#item' + i));
       }
-      this.div.masonry({
-        columnWidth: 50,
-        itemSelector: '.item'
-      });
       self = this;
-      return this.div.imagesLoaded(function() {
+      this.div.imagesLoaded(function() {
         console.log('images loaded');
-        return self.div.masonry({
-          columnWidth: this.options.related_width,
-          itemSelector: '.item',
-          gutter: 5
-        });
+        return self.div.masonry('layout');
+      });
+      return this.div.scroll(function() {
+        var scrollPos;
+        scrollPos = self.div[0].scrollHeight - self.div.scrollTop();
+        if (scrollPos - self.div.height() === 0) {
+          if (self.offset + 10 < self.tiles.length) {
+            return self.displayFromOffset(self.offset + 10);
+          }
+        }
       });
     };
-
-    /*
-    display_div: (tile) ->
-        img = tile.image_url
-        img = 'assets/img/notFound.png' if img == undefined
-        url = tile.url
-        name = tile.title
-        name = '' if name == undefined
-    
-        if name.length > @options.max_title_length
-            name = name.substr(0, @options.max_title_length) + '...'
-        @div.append("<a target='_blank' href='" + url + "'><div class='leaftr-tile'><img src='" + img + "'><div class='leaftr-tile-hover'>" + name + "</div></div></a>")
-    */
-
 
     return Leaftr;
 

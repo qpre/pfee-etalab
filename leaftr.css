@@ -9,6 +9,10 @@ a {
     color:              #646464;
 }
 
+#leaftr {
+    overflow: auto;
+}
+
 .item { width: 20%; }
 .item.w2 { width: 40%; }
 
