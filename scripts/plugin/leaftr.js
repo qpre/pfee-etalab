@@ -185,9 +185,10 @@
 
     Leaftr.prototype.displayFromOffset = function(offset) {
       var i, self, _i, _ref;
+      this.div.masonry('layout');
       this.getViewMinMax();
       this.setClasses();
-      this.offset = offset;
+      this.offset = offset + 1;
       for (i = _i = offset, _ref = offset + this.options.max_element; _i <= _ref; i = _i += 1) {
         this.tiles[i].display(this.div, i);
         this.div.masonry('appended', $('#item' + i));
@@ -204,6 +205,7 @@
         if (scrollPos - self.div.height() === 0) {
           if ((self.offset + 10 < self.tiles.length) && (self.isLoading !== true)) {
             self.displayFromOffset(self.offset + 10);
+            self.div.masonry('layout');
             return self.isLoading = true;
           }
         }
