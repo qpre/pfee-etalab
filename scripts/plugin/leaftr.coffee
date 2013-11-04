@@ -105,9 +105,10 @@ class Leaftr
                         self.min_view = related.view_count if related.view_count < self.min_view
 
     displayFromOffset: (offset) ->
+        @div.masonry('layout')
         @getViewMinMax()
         @setClasses()
-        @offset = offset
+        @offset = offset + 1
 
 		    # Add max_elements to the div
         for i in [offset..(offset + @options.max_element)] by 1
@@ -129,5 +130,6 @@ class Leaftr
             if (scrollPos - self.div.height() == 0)
                 if ((self.offset + 10 < self.tiles.length) && (self.isLoading != true))
                     self.displayFromOffset(self.offset + 10)
+                    self.div.masonry('layout')
                     self.isLoading = true
             )
