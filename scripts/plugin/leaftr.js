@@ -6,7 +6,7 @@
 
   $.fn.extend({
     leaftr: function(options) {
-      var plugin_div, settings, url;
+      var leaftr, plugin_div, settings;
       plugin_div = this;
       settings = {
         width: '600px',
@@ -19,29 +19,7 @@
         department_code: []
       };
       settings = $.extend(settings, options);
-      url = 'http://cow.etalab2.fr/api/1/datasets/related';
-      settings.city_code.forEach(function(city) {
-        if (city !== 0) {
-          return url += '?territory=CommuneOfFrance/' + city;
-        }
-      });
-      settings.department_code.forEach(function(department) {
-        if (department !== 0) {
-          return url += '?territory=DepartmentOfFrance/' + department;
-        }
-      });
-      return $.ajax(url, {
-        type: 'GET',
-        dataType: 'json',
-        error: function(jqXHR, textStatus, errorThrown) {
-          return console.log("AJAX Error: " + textStatus);
-        },
-        success: function(data, textStatus, jqXHR) {
-          var leaftr;
-          leaftr = new Leaftr(data, plugin_div, settings);
-          return leaftr.displayFromOffset(0);
-        }
-      });
+      return leaftr = new Leaftr(plugin_div, settings);
     }
   });
 
@@ -78,7 +56,7 @@
 
   /*
       LEAFTR MAIN CLASS
-  	Handling the containers' lifecycle
+      Handling the containers' lifecycle
   */
 
 
@@ -91,11 +69,9 @@
 
     Leaftr.prototype.isLoading = false;
 
-    function Leaftr(data, div, options) {
-      this.data = data;
+    function Leaftr(div, options) {
       this.div = div;
       this.options = options;
-      this.loadTiles();
       this.div.css({
         'width': this.options.width,
         'max-height': this.options.height
@@ -104,7 +80,42 @@
         itemSelector: '.item',
         gutter: 5
       });
+      this.setupUrl();
+      this.loadData();
     }
+
+    Leaftr.prototype.setupUrl = function() {
+      this.url = 'http://cow.etalab2.fr/api/1/datasets/related';
+      this.options.city_code.forEach(function(city) {
+        if (city !== 0) {
+          return this.url += '?territory=CommuneOfFrance/' + city;
+        }
+      });
+      return this.options.department_code.forEach(function(department) {
+        if (department !== 0) {
+          return this.url += '?territory=DepartmentOfFrance/' + department;
+        }
+      });
+    };
+
+    Leaftr.prototype.loadData = function() {
+      var self;
+      this.displayLoadingWheel();
+      self = this;
+      return $.ajax(this.url, {
+        type: 'GET',
+        dataType: 'json',
+        error: function(jqXHR, textStatus, errorThrown) {
+          return console.log("AJAX Error: " + textStatus);
+        },
+        success: function(data, textStatus, jqXHR) {
+          self.hideLoadingWheel();
+          self.data = data;
+          self.loadTiles();
+          return self.displayFromOffset(0);
+        }
+      });
+    };
 
     Leaftr.prototype.loadTiles = function() {
       var self, value, _i, _len, _ref, _results;
@@ -181,6 +192,14 @@
         })(value));
       }
       return _results;
+    };
+
+    Leaftr.prototype.displayLoadingWheel = function() {
+      return this.div.append("<div id='leaftr-wheel'><img src='assets/img/loading.gif'></div>");
+    };
+
+    Leaftr.prototype.hideLoadingWheel = function() {
+      return $('#leaftr-wheel').remove();
     };
 
     Leaftr.prototype.displayFromOffset = function(offset) {
