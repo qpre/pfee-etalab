@@ -15,23 +15,7 @@ $.fn.extend
             department_code: []
 
         settings = $.extend settings, options
-        
-        url = 'http://cow.etalab2.fr/api/1/datasets/related'
-        
-        settings.city_code.forEach((city) ->
-            unless city == 0 then url += '?territory=CommuneOfFrance/' + city)
-            
-        settings.department_code.forEach((department) ->
-            unless department == 0 then url += '?territory=DepartmentOfFrance/' + department)
-            
-        $.ajax url,
-            type: 'GET'
-            dataType: 'json'
-            error: (jqXHR, textStatus, errorThrown) ->
-                console.log "AJAX Error: #{textStatus}"
-            success: (data, textStatus, jqXHR) ->
-                leaftr = new Leaftr(data, plugin_div, settings)
-                leaftr.displayFromOffset(0)
+        leaftr = new Leaftr(plugin_div, settings)
 
 ###
     TILE CLASS
@@ -54,7 +38,7 @@ class Tile
 
 ###
     LEAFTR MAIN CLASS
-	Handling the containers' lifecycle
+    Handling the containers' lifecycle
 ###
 
 class Leaftr
@@ -63,8 +47,7 @@ class Leaftr
     min_view: 0
     isLoading: false
 
-    constructor: (@data, @div, @options) ->
-        @loadTiles()
+    constructor: (@div, @options) ->
         @div.css({
             'width' : @options.width
             'max-height' : @options.height
@@ -74,6 +57,29 @@ class Leaftr
           itemSelector: '.item'
           gutter: 5
         })
+        @setupUrl()
+        @loadData()
+        
+    setupUrl: () ->
+      @url = 'http://cow.etalab2.fr/api/1/datasets/related'
+      @options.city_code.forEach((city) ->
+          unless city == 0 then @url += '?territory=CommuneOfFrance/' + city)
+      @options.department_code.forEach((department) ->
+          unless department == 0 then @url += '?territory=DepartmentOfFrance/' + department)
+
+    loadData: () ->
+      @displayLoadingWheel()
+      self = @
+      $.ajax @url,
+          type: 'GET'
+          dataType: 'json'
+          error: (jqXHR, textStatus, errorThrown) ->
+              console.log "AJAX Error: #{textStatus}"
+          success: (data, textStatus, jqXHR) ->
+              self.hideLoadingWheel()
+              self.data = data
+              self.loadTiles()
+              self.displayFromOffset(0)
 
     loadTiles: () ->
         @tiles = new Array()
@@ -103,6 +109,12 @@ class Leaftr
                         self.max_view = related.view_count if related.view_count > self.max_view
                         self.min_view = related.view_count if self.min_view == 0
                         self.min_view = related.view_count if related.view_count < self.min_view
+
+    displayLoadingWheel: () ->
+      @div.append("<div id='leaftr-wheel'><img src='assets/img/loading.gif'></div>")
+      
+    hideLoadingWheel: () ->
+      $('#leaftr-wheel').remove()
 
     displayFromOffset: (offset) ->
         @div.masonry('layout')
