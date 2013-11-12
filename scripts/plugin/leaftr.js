@@ -73,9 +73,9 @@
       this.div = div;
       this.options = options;
       this.div.css({
-        'width': this.options.width,
-        'min-height': this.options.height,
-        'max-height': this.options.height
+        'width': '100%',
+        'min-height': '100%',
+        'max-height': '100%'
       });
       this.div.masonry({
         itemSelector: '.item',
