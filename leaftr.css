@@ -13,8 +13,7 @@ a {
     overflow: auto;
 }
 
-
-
+/*.grid-sizer { width: 20%; }*/
 .item { width: 20%; }
 .item.w2 { width: 40%; }
 
@@ -37,7 +36,21 @@ a {
     cursor: zoom-in;
 }
 
-.item:hover
+.item:hover .item-hover
 {
-    opacity:    0.5;
+    display:    block;
+}
+
+.item-hover
+{
+    display:          none;
+    position:         absolute;
+    background-color: black;
+    color:            white;
+    opacity:          0.6;
+    
+    width:            100%;
+    height:           40px;
+    bottom:           0px;
+    left:             0px;
 }

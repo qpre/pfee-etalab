@@ -9,8 +9,8 @@
       var leaftr, plugin_div, settings;
       plugin_div = this;
       settings = {
-        width: '600px',
-        height: '600px',
+        width: '100%',
+        height: '100%',
         max_element: 10,
         related_width: '100px',
         img_width: '100px',
@@ -47,7 +47,7 @@
 
     Tile.prototype.display = function(parent, offset) {
       this.offset = offset;
-      return parent.append("<a target='_blank' href='" + this.url + "' id='item" + this.offset + "'><div class='" + this.clss + "'><img src='" + this.img + "'><div class='leaftr-tile-hover'>" + this.name + "</div></div></a>");
+      return parent.append("<a target='_blank' href='" + this.url + "' id='item" + this.offset + "'><div class='" + this.clss + "'><img src='" + this.img + "'><div class='item-hover'><p><strong>" + this.name + "</strong></p></div></div></a>");
     };
 
     return Tile;
@@ -73,11 +73,12 @@
       this.div = div;
       this.options = options;
       this.div.css({
-        'width': '100%',
-        'min-height': '100%',
-        'max-height': '100%'
+        'width': this.options.width,
+        'min-height': this.options.height,
+        'max-height': this.options.height
       });
       this.div.masonry({
+        columnWidth: '.item',
         itemSelector: '.item',
         gutter: 5
       });

@@ -34,7 +34,7 @@ class Tile
         @name = '' if @name == undefined
 
     display: (parent, @offset) ->
-        parent.append("<a target='_blank' href='" + @url + "' id='item" + @offset + "'><div class='" + @clss + "'><img src='" + @img + "'><div class='leaftr-tile-hover'>" + @name + "</div></div></a>")
+        parent.append("<a target='_blank' href='" + @url + "' id='item" + @offset + "'><div class='" + @clss + "'><img src='" + @img + "'><div class='item-hover'><p><strong>" + @name + "</strong></p></div></div></a>")
 
 ###
     LEAFTR MAIN CLASS
@@ -54,7 +54,7 @@ class Leaftr
             'max-height' : @options.height
         })
         @div.masonry({
-          #columnWidth: @options.related_width
+          columnWidth: '.item'
           itemSelector: '.item'
           gutter: 5
         })
