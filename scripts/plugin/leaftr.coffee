@@ -5,8 +5,8 @@ $.fn.extend
         plugin_div = this
 
         settings =
-            width: '600px'
-            height: '600px'
+            width: '100%'
+            height: '100%'
             max_element: 10
             related_width: '100px'
             img_width: '100px'
