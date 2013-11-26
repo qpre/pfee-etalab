@@ -2,17 +2,16 @@ $ = jQuery
 
 $(document).ready ->
 	code = '
-&lt;link rel="stylesheet" type="text/css" href="http://pfee.leaftr.com/leaftr.css"&gt;\n
-&lt;script type="text/javascript" src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"&gt;&lt;/script&gt;\n
-&lt;script type="text/javascript" src="http://pfee.leaftr.com/scripts/lib/imagesloaded.pkgd.min.js"&gt;&lt;/script&gt;\n
-&lt;script type="text/javascript" src="http://pfee.leaftr.com/scripts/lib/masonry.js"&gt;&lt;/script&gt;\n
-&lt;script type="text/javascript" src="http://pfee.leaftr.com/scripts/plugin/leaftr.js"&gt;&lt;/script&gt;\n
+&lt;link rel="stylesheet" type="text/css" href="http://pfee.leaftr.com/assets/style/leaftr.css"&gt;\n
+&lt;script type="text/javascript"\n
+            data-main="scripts/app"\n
+            src="http://pfee.leaftr.com/bower_components/requirejs/require.js"&gt;&lt;/script&gt;\n
 &lt;script type="text/javascript"&gt;\n
-	$(document).ready(function() { \n
-		$(\'#leaftr\').leaftr({\n
+  require([\'app/main\'], function(app) {\n
+     $(\'#leaftr\').leaftr({\n
 ##REPLACE## \n
-		});\n
-	}); \n
+			});\n
+    });\n
 &lt;/script&gt;\n
 '
 
