@@ -15,6 +15,6 @@ define(()->
           @name = '' if @name == undefined
 
       display: () ->
-          parent.append("<a target='_blank' href='" + @url + "' id='item" + @offset + "'><div class='" + @clss + "'><img src='" + @img + "'><div class='item-hover'><p><strong>" + @name + "</strong></p></div></div></a>")
+          @parent.append("<a target='_blank' href='" + @url + "' id='item" + @offset + "'><div class='" + @clss + "'><img src='" + @img + "'><div class='item-hover'><p><strong>" + @name + "</strong></p></div></div></a>")
 
 )

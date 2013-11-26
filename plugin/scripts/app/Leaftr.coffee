@@ -1,9 +1,10 @@
 define(['jquery',
+        'masonry/masonry',
+        'imagesloaded/imagesloaded',
         'app/Tile',
         'app/Wheel',
         'app/Button',
-        'app/States',
-        'masonry'], ($, Tile, Wheel, Button, STATES) ->
+        'app/States'], ($, Masonry, ImagesLoaded, Tile, Wheel, Button, STATES) ->
   
   ###
     LEAFTR
@@ -11,13 +12,18 @@ define(['jquery',
   ###
   class Leaftr
     options: null
-    data: null
+    tiles: null
     
     main_container: null
     tiles_container: null
     loadingWheel: null
     
     state: STATES.NORMAL
+    
+    max_view: 0
+    min_view: 0
+    
+    offset: 0
     
     # called on creation
     #
@@ -40,15 +46,22 @@ define(['jquery',
         'min-height' : @options.height
         'max-height' : @options.height
       })
+      
       @tiles_container = $('#leaftr_tiles')
       @tiles_container.css({
         'width' : '100%'
         'min-height' : '100%'
-        'max-height' : '100%'
       })
-      
+      @msonry = new Masonry('#leaftr_tiles', {
+          columnWidth: '.item'
+          itemSelector: '.item'
+          gutter: 5
+        })
+      self = this
       @loadingWheel = new Wheel(@tiles_container)
-      @loadButton = new Button(@main_container, @loadMore())
+      @loadButton = new Button(@main_container, () ->
+        self.loadMore()
+      )
       
     # function loadData
     #
@@ -71,6 +84,7 @@ define(['jquery',
           success: (data, textStatus, jqXHR) ->
               self.loadTiles(data)
               self.unsetLoading()
+              self.loadMore()
 
     # function loadTiles
     #
@@ -85,7 +99,10 @@ define(['jquery',
             do (value) ->
                 for related in value.related
                     do (related) ->
-                        self.tiles.push(new Tile(related, self.parent, self.tiles.length))
+                        self.max_view = related.view_count if related.view_count > self.max_view
+                        self.min_view = related.view_count if self.min_view == 0
+                        self.min_view = related.view_count if related.view_count < self.min_view
+                        self.tiles.push(new Tile(related, self.tiles_container, self.tiles.length))
 
     # function setLoading
     #
@@ -110,5 +127,46 @@ define(['jquery',
     # loads @max_tiles tiles from Leaftr's current offset
     #
     loadMore: () ->
-      console.log 'click !'
+      @msonry.layout()
+      @setClasses()
+      @state = STATES.LOADING
+      
+      curoffset = @offset
+      
+	    # Add max_elements to the div
+      for i in [curoffset..(curoffset + @options.max_element)] by 1
+          @tiles[i].display()
+          @msonry.appended(document.querySelector('#item'+i))
+          @offset += 1
+  
+      self = this
+	    # Let's apply some masonry when the heights are ready
+      @tiles_container.imagesLoaded(() ->
+        self.state = STATES.NORMAL
+        self.msonry.layout()
+      )
+      
+	    # let's listen to that scroll thingy
+      @main_container.scroll(() ->
+          scrollPos = (self.main_container[0].scrollHeight - self.main_container.scrollTop())
+          if (scrollPos - self.main_container.height() == 0)
+              if ((self.offset + 10 < self.tiles.length) && (self.state != STATES.LOADING))
+                  self.loadMore()
+                  self.msonry.layout()
+                  self.state = STATES.LOADING
+          )
+      
+    # function setClasses
+    #
+    # sets Tiles CSS classes depending on view count
+    #
+    setClasses: () ->
+      for tile in @tiles
+          if @max_view == 0
+              tile.clss = 'item'
+          else
+              if tile.view_count < (@max_view / 2)
+                  tile.clss = 'item'
+              if tile.view_count >= (@max_view / 2)
+                  tile.clss = 'item w2'
 )
