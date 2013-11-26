@@ -28,14 +28,14 @@ a {
 }
 
 /*.grid-sizer { width: 20%; }*/
-.item { width: 23%; }
-.item.w2 { width: 46%; }
+.item { width: 24%; }
+.item.w2 { width: 48%; }
 
 .item img { width: 100%; }
 
 .item {
     margin-top: 5px;
-    border: 7px solid #fff;
+    border: 1px solid #fff;
     border-color: #fff;
     background-color: #fff;
     overflow: hidden;
