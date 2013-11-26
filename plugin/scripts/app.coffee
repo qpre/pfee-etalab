@@ -1,7 +1,7 @@
 requirejs.config({
     "baseUrl": "scripts/lib",
     "paths": {
-      "app": "../app",
+      "app": "../../build/scripts/app",
       "jquery": "jquery",
       "masonry": "masonry",
       "imagesLoaded": "imagesloaded.pkgd.min"
