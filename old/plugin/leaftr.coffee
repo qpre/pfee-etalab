@@ -2,7 +2,7 @@ $ = jQuery
 
 $.fn.extend
     leaftr: (options) ->
-        plugin_div = this
+        plugin_container = this
 
         settings =
             width: '100%'
@@ -15,7 +15,7 @@ $.fn.extend
             department_code: []
 
         settings = $.extend settings, options
-        leaftr = new Leaftr(plugin_div, settings)
+        leaftr = new Leaftr(plugin_container, settings)
 
 ###
     TILE CLASS

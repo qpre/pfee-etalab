@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title>activiz : les reutilisations les plus en vue</title>
+    <script data-main="scripts/app"
+            src="scripts/lib/require.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/style/leaftr.css">
+	</head>
+	<body>
+		<div id="leaftr">
+
+		</div>
+		<script type="text/javascript">
+    require(['app/main'], function(app) {
+     $('#leaftr').leaftr({
+				max_element: 10
+			});
+    });
+		</script>
+	</body>
+</html>
