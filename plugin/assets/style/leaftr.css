@@ -18,9 +18,18 @@ a {
   /*cursor: pointer;*/
 }
 
+#leaftr-wheel {
+  overflow: hidden;
+}
+
+#leaftr-wheel > img {
+  display: block;
+  margin: auto;
+}
+
 /*.grid-sizer { width: 20%; }*/
-.item { width: 20%; }
-.item.w2 { width: 40%; }
+.item { width: 23%; }
+.item.w2 { width: 46%; }
 
 .item img { width: 100%; }
 

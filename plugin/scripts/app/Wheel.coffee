@@ -5,7 +5,7 @@ define(['jquery'], ($) ->
     constructor: (@parent) ->
       
     display: () ->
-      @parent.append("<img id='leaftr-wheel' src='assets/img/loading.gif'>")
+      @parent.append("<div id='leaftr-wheel'><img src='assets/img/loading.gif'></div>")
     
     hide: () ->
       $('#leaftr-wheel').remove()
