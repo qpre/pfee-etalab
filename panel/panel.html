@@ -54,12 +54,14 @@
 			<div id="leaftr-generated-code">
 				<pre>
 					<code class="html">
-&lt;link rel="stylesheet" type="text/css" href="http://pfee.leaftr.com/leaftr.css"&gt;
-&lt;script type="text/javascript" src="http://pfee.leaftr.com/src/leaftr.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="http://pfee.leaftr.com/assets/style/leaftr.css"&gt;
+&lt;script type="text/javascript" 
+        data-main="scripts/app"
+        src="http://pfee.leaftr.com/bower_components/requirejs/require.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript"&gt;
-	$(document).ready(function() {
-		$('#leaftr').leaftr();
-	});
+  require(['app/main'], function(app) {
+    $('#leaftr').leaftr();
+  });
 &lt;/script&gt;
 					</code>
 				</pre>
