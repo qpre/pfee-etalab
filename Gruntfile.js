@@ -39,9 +39,9 @@ module.exports = function(grunt) {
       plugin: {
         files: [
           // includes lib
-          {expand: true, flatten: true, src: ['plugin/scripts/lib/*.js'], dest: 'plugin/build/scripts/lib/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['plugin/assets/style/*'], dest: 'plugin/build/assets/style/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['plugin/assets/img/*'], dest: 'plugin/build/assets/img/', filter: 'isFile'},
+          { expand: true, cwd: 'plugin/bower_components/', src: '**/*', dest: 'plugin/build/bower_components/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['plugin/*.html'], dest: 'plugin/build/'},
         ]
       }
@@ -58,16 +58,25 @@ module.exports = function(grunt) {
     
     // this, is orgasmically neat
     watch: {
+        bower:{
+            files: ['plugin/bower_components/*'],
+        },
         coffee: {
             files: ['plugin/scripts/**/*.coffee'],
             tasks: ['coffee:plugin']
+        },
+        css: {
+            files: ['plugin/assets/style/**/*.css'],
+        },
+        img: {
+            files: ['plugin/assets/img/**/*.{png,jpg,jpeg,gif}'],
         },
         livereload: {
             options: {
                 livereload: LIVERELOAD_PORT
             },
             files: [
-                'plugin/build/**/*'
+                'plugin/build/scripts/**/*'
             ]
         }
     },

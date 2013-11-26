@@ -13,6 +13,10 @@ a {
     overflow: auto;
 }
 
+#leaftr-load-button {
+  /*cursor: pointer;*/
+}
+
 /*.grid-sizer { width: 20%; }*/
 .item { width: 20%; }
 .item.w2 { width: 40%; }

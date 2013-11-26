@@ -1,10 +1,8 @@
 requirejs.config({
-    "baseUrl": "scripts/lib",
-    "paths": {
-      "app": "../app",
-      "jquery": "jquery",
-      "masonry": "masonry",
-      "imagesLoaded": "imagesloaded.pkgd.min"
+    baseUrl: "bower_components",
+    paths: {
+      "app": "../scripts/app",
+      'jquery': 'jquery/jquery'
     }
 })
 
