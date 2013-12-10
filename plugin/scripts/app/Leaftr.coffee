@@ -124,20 +124,20 @@ define(['jquery',
       if (curoffset + @options.max_element > @tiles.length)
         @loadData()
         
-	    # Add max_elements to the div
+      # Add max_elements to the div
       for i in [curoffset..(curoffset + @options.max_element)] by 1
           @tiles[i].display()
           @msonry.appended(document.querySelector('#item'+i))
           @offset += 1
   
       self = this
-	    # Let's apply some masonry when the heights are ready
+      # Let's apply some masonry when the heights are ready
       @tiles_container.imagesLoaded(() ->
         self.state = STATES.NORMAL
         self.msonry.layout()
       )
       
-	    # let's listen to that scroll thingy
+      # let's listen to that scroll thingy
       @main_container.scroll(() ->
           scrollPos = (self.main_container[0].scrollHeight - self.main_container.scrollTop())
           if (scrollPos - self.main_container.height() == 0)
@@ -145,6 +145,8 @@ define(['jquery',
                   self.display()
                   self.msonry.layout()
                   self.state = STATES.LOADING
+              else
+                self.loadData()
           )
 
     # function setLoading
