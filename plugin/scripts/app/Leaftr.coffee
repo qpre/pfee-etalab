@@ -74,7 +74,7 @@ define(['jquery',
       @setLoading()
       url = 'http://cow.etalab2.fr/api/1/datasets/related'
       url += '?page=' + ++@curpage
-
+      console.log 'loading from page: ' + url
       @options.city_code.forEach((city) ->
           unless city == 0 then url += '?territory=CommuneOfFrance/' + city)
       @options.department_code.forEach((department) ->
@@ -118,36 +118,37 @@ define(['jquery',
       @msonry.layout()
       @setClasses()
       @state = STATES.LOADING
-      
+
       curoffset = @offset
       
       if (curoffset + @options.max_element > @tiles.length)
         @loadData()
-        
-      # Add max_elements to the div
-      for i in [curoffset..(curoffset + @options.max_element)] by 1
+      else  
+        # Add max_elements to the div
+        for i in [curoffset..(curoffset + @options.max_element)] by 1
           @tiles[i].display()
           @msonry.appended(document.querySelector('#item'+i))
           @offset += 1
   
-      self = this
-      # Let's apply some masonry when the heights are ready
-      @tiles_container.imagesLoaded(() ->
-        self.state = STATES.NORMAL
-        self.msonry.layout()
-      )
+        self = this
+        # Let's apply some masonry when the heights are ready
+        @tiles_container.imagesLoaded(() ->
+          self.state = STATES.NORMAL
+          self.msonry.layout()
+        )
       
-      # let's listen to that scroll thingy
-      @main_container.scroll(() ->
-          scrollPos = (self.main_container[0].scrollHeight - self.main_container.scrollTop())
-          if (scrollPos - self.main_container.height() == 0)
-              if ((self.offset + 10 < self.tiles.length) && (self.state != STATES.LOADING))
-                  self.display()
-                  self.msonry.layout()
-                  self.state = STATES.LOADING
-              else
-                self.loadData()
-          )
+        # let's listen to that scroll thingy
+        @main_container.scroll(() ->
+            scrollPos = (self.main_container[0].scrollHeight - self.main_container.scrollTop())
+            if (scrollPos - self.main_container.height() == 0)
+                if ((self.offset + 10 < self.tiles.length) && (self.state != STATES.LOADING))
+                    self.display()
+                    self.msonry.layout()
+                    self.state = STATES.LOADING
+                else
+                    if self.state != STATES.LOADING
+                        self.loadData()
+            )
 
     # function setLoading
     #
