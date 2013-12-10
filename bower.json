@@ -1,0 +1,25 @@
+{
+  "name": "pfe-e-plugin-etalab",
+  "version": "0.0.0",
+  "authors": [
+    "Hugo BRAC",
+    "Aymeric DERBOIS",
+    "Quentin PRE"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "plugin/bower_components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.9",
+    "jquery": "~2.0.3",
+    "masonry": "~3.1.2",
+    "imagesloaded": "~3.0.4"
+  }
+}
