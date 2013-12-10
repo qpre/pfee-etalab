@@ -90,7 +90,8 @@ define(['jquery',
               self.loadTiles(data)
               self.unsetLoading()
               self.display()
-              
+              self.msonry.layout() # One more is never too much...
+        
     # function loadTiles
     #
     # creates an array of Tiles, based on data's content
@@ -123,7 +124,7 @@ define(['jquery',
       
       if (curoffset + @options.max_element > @tiles.length)
         @loadData()
-      else  
+      else
         # Add max_elements to the div
         for i in [curoffset..(curoffset + @options.max_element)] by 1
           @tiles[i].display()
