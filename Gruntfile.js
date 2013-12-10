@@ -34,6 +34,10 @@ module.exports = function(grunt) {
         }]
       }
     },
+
+    bower: {
+      install: {}
+    },
     
     copy: {
       plugin: {
@@ -112,9 +116,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-bower-task');
 
   // Tasks
-  grunt.registerTask('plugin', ['clean:plugin','coffee:plugin', 'copy:plugin']);
+  grunt.registerTask('plugin', ['bower:install','clean:plugin','coffee:plugin', 'copy:plugin']);
   grunt.registerTask('panel', ['clean:panel','coffee:panel']);
   grunt.registerTask('server', function (target) {
       if (target === 'plugin') {
